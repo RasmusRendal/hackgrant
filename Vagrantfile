@@ -64,6 +64,7 @@ Vagrant.configure("2") do |config|
   # Ansible, Chef, Docker, Puppet and Salt are also available. Please see the
   # documentation for more information about their specific syntax and use.
   config.vm.provision "shell", inline: <<-SHELL
+    export DEBIAN_FRONTEND=noninteractive
     # Setting up repos
     apt-get update
     apt-get upgrade
@@ -73,8 +74,14 @@ Vagrant.configure("2") do |config|
     apt-get update
 
     # Installing packages
-    apt-get install -y neovim radare2 gdb git python3-pip
-    pip install ropper ropgadget pwntools
+    apt-get install -y neovim gdb git python3-pip feh ripgrep strace python3-venv htop libgmp3-dev libmpc-dev
+    pip install ropper ropgadget pwntools tqdm
+
+    # radare2
+    sudo -u vagrant git clone https://github.com/radareorg/radare2 /home/vagrant/radare2 --depth 1
+    sudo -u vagrant /home/vagrant/radare2/sys/install.sh
+    sudo -u vagrant r2pm init
+    sudo -u vagrant r2pm -ci install r2ghidra
 
     # pwndbg
     git clone https://github.com/pwndbg/pwndbg /opt/pwndbg
@@ -82,6 +89,24 @@ Vagrant.configure("2") do |config|
     sudo -u vagrant ./setup.sh
     popd
 
-    apt-get install -y ghidra
+    # Rsactftool
+    git clone https://github.com/Ganapati/RsaCtfTool /opt/RsaCtfTool
+    pip install -r /opt/RsaCtfTool/requirements.txt
+
+    # Heavy packages
+    apt-get install -y ghidra openjdk-11-jre
+    apt-get install -y xfce4 xfce4-goodies thunar-archive-plugin dbus-x11 qt5dxcb-plugin
+
+    # The angr directory
+    sudo -u vagrant mkdir /home/vagrant/angr
+    pushd /home/vagrant/angr
+    sudo -u vagrant python3 -m venv .venv
+    sudo -u vagrant bash -c 'source .venv/bin/activate && pip install angr-management'
+    popd
+
+    # Nix
+    sudo -u vagrant bash -c "curl -L https://nixos.org/nix/install | sh"
+
+    echo "export TERM=xterm-256color" >> /home/vagrant/.bashrc
   SHELL
 end
