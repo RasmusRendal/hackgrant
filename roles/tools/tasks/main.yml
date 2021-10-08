@@ -4,6 +4,7 @@
     dest: /opt/RsaCtfTool
     clone: yes
     update: yes
+    depth: 1
 - name: Install RsaCtfTool dependencies
   command: sudo pip install -r /opt/RsaCtfTool/requirements.txt
 - name: All my favourite pip packages
@@ -19,3 +20,17 @@
     dest: /opt/PEASS
     clone: yes
     update: yes
+    depth: 1
+- name: Fetch searchsploit
+  git:
+    repo: https://github.com/offensive-security/exploitdb
+    dest: /opt/exploitdb
+    clone: yes
+    update: yes
+    depth: 1
+- name: Symlink searchsploit
+  file:
+    src: /opt/exploitdb/searchsploit
+    dest: /usr/bin/searchsploit
+    state: link
+
