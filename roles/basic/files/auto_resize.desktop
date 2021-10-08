@@ -1,0 +1,7 @@
+[Desktop Entry]
+Encoding=UTF-8
+Name=Auto Resize
+Comment=Automatically resizes virtual display
+Exec=/usr/local/bin/auto_resize
+Terminal=false
+Type=Application

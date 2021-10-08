@@ -1,0 +1,21 @@
+- name: Get RsaCtfTool
+  git:
+    repo: https://github.com/Ganapati/RsaCtfTool
+    dest: /opt/RsaCtfTool
+    clone: yes
+    update: yes
+- name: Install RsaCtfTool dependencies
+  command: sudo pip install -r /opt/RsaCtfTool/requirements.txt
+- name: All my favourite pip packages
+  command: sudo pip install ropper ropgadget pwntools tqdm
+- name: Create symbolic link for RsaCtfTool
+  file:
+    src: "/opt/RsaCtfTool/RsaCtfTool.py"
+    dest: "/usr/bin/rsactftool"
+    state: link
+- name: Fetch linpeas
+  git:
+    repo: https://github.com/carlospolop/PEASS-ng
+    dest: /opt/PEASS
+    clone: yes
+    update: yes

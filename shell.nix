@@ -1,5 +1,5 @@
 { pkgs ? import <nixpkgs> {} }:
 pkgs.mkShell {
 
-  nativeBuildInputs = [ pkgs.vagrant ];
+  nativeBuildInputs = with pkgs; [ vagrant ansible ];
 }

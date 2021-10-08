@@ -1,0 +1,25 @@
+- name: Create local opt
+  file:
+    path: /home/vagrant/.local/opt
+    owner: vagrant
+    state: directory
+- name: Fetch radare
+  git:
+    repo: https://github.com/radareorg/radare2
+    dest: /home/vagrant/.local/opt/radare2
+    clone: yes
+    update: yes
+  register: radaregit
+- name: Install radare
+  command: /home/vagrant/.local/opt/radare2/sys/install.sh
+  when: radaregit.changed
+- name: Fetch pwndbg
+  git:
+    repo: https://github.com/pwndbg/pwndbg
+    dest: /home/vagrant/.local/opt/pwndbg
+    clone: yes
+    update: yes
+  register: pwndbggit
+- name: Install pwndbg
+  shell: "DEBIAN_FRONTEND=noninteractive cd /home/vagrant/.local/opt/pwndbg/ && ./setup.sh"
+  when: pwndbggit.changed

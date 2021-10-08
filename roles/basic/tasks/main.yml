@@ -1,0 +1,54 @@
+- name: Update
+  apt:
+    update_cache: yes
+    upgrade: full
+- name: Install packages
+  apt:
+    name: [sudo, neovim, gdb, git, python3-pip, feh, ripgrep, strace, python3-venv, htop, libgmp3-dev, libmpc-dev, xfce4, xfce4-goodies, lightdm, firefox-esr, spice-vdagent, wireguard, wireguard-tools, tmux, openvpn]
+- name: Install hacker packages
+  apt:
+    name: [nmap]
+- name: Set X11 keyboard layout
+  command: localectl set-x11-keymap us pc104 dvp
+- name: Set console keyboard layout
+  command: localectl set-keymap dvorak-programmer
+- name: Upload auto_resize script
+  copy:
+    src: auto_resize.sh
+    dest: /usr/local/bin/auto_resize
+    owner: root
+    group: root
+    mode: +x
+- name: Add auto_resize desktop entry
+  copy:
+    src: auto_resize.desktop
+    dest: /etc/xdg/autostart/auto_resize.desktop
+    owner: root
+    group: root
+- name: Enable ipv6
+  sysctl:
+    name: net.ipv6.conf.all.disable_ipv6
+    value: '0'
+- name: Check Nix is installed
+  stat:
+    path: /nix
+  register: nix_exists
+- name: Install Nix
+  become: yes
+  become_user: vagrant
+  shell: "curl -L https://nixos.org/nix/install | sh"
+  when: nix_exists.stat.exists == false
+- name: Enable terminal colors in alacritty (hack)
+  lineinfile:
+    line: "export TERM=xterm-256color"
+    insertbefore: BOF
+    path: /home/vagrant/.bashrc
+- name: Remove timeout from grub file
+  replace:
+    path: /etc/default/grub
+    regexp: 'GRUB_TIMEOUT=5'
+    replace: 'GRUB_TIMEOUT=0'
+  register: grubconf
+- name: Update grub
+  command: update-grub
+  when: grubconf.changed

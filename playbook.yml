@@ -1,0 +1,8 @@
+- hosts: all
+  roles:
+    - role: basic
+      become: yes
+    - role: user
+    - role: tools
+      become: yes
+
