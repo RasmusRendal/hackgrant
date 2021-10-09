@@ -13,6 +13,8 @@
 - name: Install radare
   command: /home/vagrant/.local/opt/radare2/sys/install.sh
   when: radaregit.changed
+- name: Radare plugins
+  command: r2pm -ci r2ghidra
 - name: Fetch pwndbg
   git:
     repo: https://github.com/pwndbg/pwndbg

@@ -1,3 +1,27 @@
+- name: Install some hackertools using apt
+  apt:
+    name: [wireshark]
+- name: Let wireshark capture packets
+  capabilities:
+    path: /usr/bin/dumpcap
+    capability: "cap_net_raw,cap_net_admin=eip"
+    state: present
+- name: Add wireshark group
+  group:
+    name: wireshark
+    state: present
+- name: Set permissions for dumpcap
+  file:
+    path: /usr/bin/dumpcap
+    group: wireshark
+    mode: o-rx
+- name: Add vagrant to wireshark group
+  user:
+    name: vagrant
+    uid: 1000
+    groups: [wireshark]
+- name: Run dpkg-reconfigure, to fix wireshark(???)
+  shell: "DEBIAN_FRONTEND=noninteractive dpkg-reconfigure wireshark-common"
 - name: Get RsaCtfTool
   git:
     repo: https://github.com/Ganapati/RsaCtfTool
