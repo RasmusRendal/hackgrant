@@ -57,3 +57,11 @@
 - name: Update grub
   command: update-grub
   when: grubconf.changed
+# xfce4-query is the frustrating thing I've ever seen
+# Why can't I change xfce settings without starting it??
+- name: Add background
+  copy:
+    src: wallpaper.png
+    dest: /home/vagrant/.wallpaper.png
+    owner: vagrant
+    group: vagrant
