@@ -1,6 +1,6 @@
 - name: Install some hackertools using apt
   apt:
-    name: [wireshark]
+    name: [wireshark, dirb, gobuster]
 - name: Let wireshark capture packets
   capabilities:
     path: /usr/bin/dumpcap
