@@ -4,7 +4,12 @@
     upgrade: full
 - name: Install packages
   apt:
-    name: [sudo, neovim, gdb, git, python3-pip, feh, ripgrep, strace, python3-venv, htop, libgmp3-dev, libmpc-dev, xfce4, xfce4-goodies, lightdm, firefox-esr, spice-vdagent, wireguard, wireguard-tools, tmux, openvpn]
+    name: [sudo, neovim, gdb, gdbserver, git, python3-pip, feh, ripgrep, strace, python3-venv, htop, libgmp3-dev, libmpc-dev, xfce4, xfce4-goodies, lightdm, firefox-esr, spice-vdagent, wireguard, wireguard-tools, tmux, openvpn, zip]
+- name: Symlink python to python3
+  file:
+    src: /usr/bin/python3
+    dest: /usr/bin/python
+    state: link
 - name: Install hacker packages
   apt:
     name: [nmap]
