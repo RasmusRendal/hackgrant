@@ -15,13 +15,3 @@
   when: radaregit.changed
 - name: Radare plugins
   command: r2pm -ci r2ghidra
-- name: Fetch pwndbg
-  git:
-    repo: https://github.com/pwndbg/pwndbg
-    dest: /home/vagrant/.local/opt/pwndbg
-    clone: yes
-    update: yes
-  register: pwndbggit
-- name: Install pwndbg
-  shell: "DEBIAN_FRONTEND=noninteractive cd /home/vagrant/.local/opt/pwndbg/ && ./setup.sh"
-  when: pwndbggit.changed

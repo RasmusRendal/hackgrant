@@ -9,14 +9,11 @@ Vagrant.configure("2") do |config|
     libvirt.channel :type => 'spicevmc', :target_name => 'com.redhat.spice.0', :target_type => 'virtio'
     libvirt.video_type = "qxl"
     libvirt.video_vram = 65536
+    libvirt.memory = 4096
+    libvirt.cpus = 4
   end
 
   config.vm.provision :ansible do |ansible|
     ansible.playbook = "playbook.yml"
-  end
-
-  config.trigger.after [:provision] do |t|
-    t.name = "Reboot after provisioning"
-    t.run = { :inline => "vagrant reload" }
   end
 end

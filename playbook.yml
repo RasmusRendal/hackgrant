@@ -3,6 +3,6 @@
     - role: basic
       become: yes
     - role: user
+    - role: rev
     - role: tools
       become: yes
-
