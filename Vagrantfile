@@ -2,7 +2,7 @@
 # vi: set ft=ruby :
 
 Vagrant.configure("2") do |config|
-  config.vm.box = "generic/debian11"
+  config.vm.box = "debian/bookworm64"
 
   config.vm.provider :libvirt do |libvirt|
     libvirt.graphics_type = "spice"

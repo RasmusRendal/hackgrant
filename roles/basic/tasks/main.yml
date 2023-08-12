@@ -8,7 +8,7 @@
     path: /etc/apt/sources.list
 - name: Download kali repo keys
   get_url:
-    url: https://http.kali.org/kali/pool/main/k/kali-archive-keyring/kali-archive-keyring_2020.2_all.deb
+    url: https://http.kali.org/kali/pool/main/k/kali-archive-keyring/kali-archive-keyring_2022.1_all.deb
     dest: /tmp/kali-keys.deb
 - name: Install kali repo keys
   apt:
@@ -30,8 +30,8 @@
     name: [nmap]
 - name: Set X11 keyboard layout
   command: localectl set-x11-keymap us pc104 dvp
-- name: Set console keyboard layout
-  command: localectl set-keymap dvorak-programmer
+    #- name: Set console keyboard layout
+  #command: localectl set-keymap dvorak-programmer
 - name: Upload auto_resize script
   copy:
     src: auto_resize.sh

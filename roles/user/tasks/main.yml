@@ -13,5 +13,7 @@
 - name: Install radare
   command: /home/vagrant/.local/opt/radare2/sys/install.sh
   when: radaregit.changed
-- name: Radare plugins
+- name: Radare plugins index
+  command: r2pm -U
+- name: Install r2ghidra
   command: r2pm -ci r2ghidra

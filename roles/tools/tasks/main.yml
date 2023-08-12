@@ -1,6 +1,6 @@
 - name: Install some hackertools using apt
   apt:
-    name: [wireshark, dirb, gobuster]
+    name: [wireshark, dirb, gobuster, python3-pwntools, ropper, python3-ropgadget, python3-tqdm]
 - name: Let wireshark capture packets
   capabilities:
     path: /usr/bin/dumpcap
@@ -30,9 +30,9 @@
     update: yes
     depth: 1
 - name: Install RsaCtfTool dependencies
-  command: sudo pip install -r /opt/RsaCtfTool/requirements.txt
+  command: sudo pip install --break-system-packages -r /opt/RsaCtfTool/requirements.txt
 - name: All my favourite pip packages
-  command: sudo pip install ropper ropgadget pwntools tqdm
+  command: sudo pip install --break-system-packages angr
 - name: Create symbolic link for RsaCtfTool
   file:
     src: "/opt/RsaCtfTool/RsaCtfTool.py"
@@ -47,7 +47,7 @@
     depth: 1
 - name: Fetch searchsploit
   git:
-    repo: https://github.com/offensive-security/exploitdb
+    repo: https://gitlab.com/exploit-database/exploitdb
     dest: /opt/exploitdb
     clone: yes
     update: yes
